@@ -29,8 +29,7 @@ struct ContentView: View {
                             VStack(alignment: .leading) {
                                 Text(todo.title)
                                     .foregroundColor(todo.isCompleted ? .green : .black)
-                                    .strikethrough(todo.isCompleted ? true : false)
-                                if !todo.details.isEmpty {
+                                if !todo.details.isEmpty && !todo.isCompleted{
                                     Text(todo.details)
                                         .font(.caption)
                                         .foregroundColor(.gray)
