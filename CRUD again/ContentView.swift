@@ -1,67 +1,26 @@
 //
 //  ContentView.swift
-//  CRUD_again
+//  Todos v3
 //
-//  Created by T Krobot on 25/6/22.
+//  Created by YJ Soon on 9/7/22.
 //
 
 import SwiftUI
 
 struct ContentView: View {
-    
-    @State var todos = [
-        Todo(title: "Watch some Paw Patrol"),
-        Todo(title: "Conduct a giveaway",
-             details: "??????"),
-        Todo(title: "Randomly deduct some points")]
-    
-    @State var isSheetPresented = false
+        
+    @StateObject var todoManager = TodoManager()
     
     var body: some View {
-        NavigationView {
-            List {
-                ForEach($todos) { $todo in
-                    NavigationLink {
-                        TodoDetailView(todo: $todo)
-                    } label: {
-                        HStack {
-                            Image(systemName: todo.isCompleted ? "checkmark.circle.fill" : "circle")
-                            VStack(alignment: .leading) {
-                                Text(todo.title)
-                                    .foregroundColor(todo.isCompleted ? .green : .black)
-                                if !todo.details.isEmpty && !todo.isCompleted{
-                                    Text(todo.details)
-                                        .font(.caption)
-                                        .foregroundColor(.gray)
-                                }
-                            }
-                            .padding(7)
-                        }
-                    }
+        TabView {
+            MainTodoListView(todoManager: todoManager)
+                .tabItem {
+                    Label("Todos", systemImage: "checkmark.circle.fill")
                 }
-                .onDelete { indexSet in
-                    todos.remove(atOffsets: indexSet)
+            HowManyMoreView(todoManager: todoManager)
+                .tabItem {
+                    Label("How many more", systemImage: "number.circle")
                 }
-                .onMove { indices, newOffset in
-                    todos.move(fromOffsets: indices, toOffset: newOffset)
-                }
-            }
-            .navigationTitle("My important things")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    EditButton()
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        isSheetPresented = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                }
-            }
-        }
-        .sheet(isPresented: $isSheetPresented) {
-            NewTodoView(todos: $todos)
         }
     }
 }
