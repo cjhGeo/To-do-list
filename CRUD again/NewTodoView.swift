@@ -1,29 +1,25 @@
 //
 //  NewTodoView.swift
-//  CRUD
+//  Todos v3
 //
-//  Created by T Krobot on 2/7/22.
+//  Created by YJ Soon on 9/7/22.
 //
 
 import SwiftUI
 
 struct NewTodoView: View {
     
-    @State var todo = ""
-    @State var todoDescription = ""
+    @State var todoText = ""
     @Binding var todos: [Todo]
     
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
         Form {
-            TextField("Task", text: $todo)
+            TextField("Please enter a name for your todo", text: $todoText)
             
-            TextField("Task description (Optional)", text: $todoDescription)
-            
-            Button("Save Todo") {
-                
-                todos.append(Todo(title: todo, details: todoDescription))
+            Button("Save") {
+                todos.append(Todo(title: todoText))
                 dismiss()
             }
         }

@@ -1,48 +1,31 @@
 //
 //  TodoDetailView.swift
-//  CRUD
+//  Todos v3
 //
-//  Created by T Krobot on 25/6/22.
+//  Created by YJ Soon on 9/7/22.
 //
 
 import SwiftUI
 
 struct TodoDetailView: View {
-    
     @Binding var todo: Todo
-    @State var todoOpacity: Double = 100
-    @State var doneTodo = false
-    @State var doneTodoRotation: Angle = .zero
     
     var body: some View {
         VStack {
-            ZStack {
-            Text(todo.title)
-                .strikethrough(todo.isCompleted ? true : false)
-                .opacity(todoOpacity)
+            TextField("Enter your todo title here", text: $todo.title)
+                .textFieldStyle(.roundedBorder)
                 .padding()
-                
-                if doneTodo {
-                    Text(todo.title)
-                        .onAppear {
-                            withAnimation(.easeOut(duration: 1).delay(3)) {
-                                doneTodoRotation = .degrees(720)
-                            }
-                        }
-                         
-                }
-                
-            }
-            
             Button {
-                    todo.isCompleted.toggle()
-                withAnimation(.easeInOut(duration: 1.5).delay(1)) {
-                    todoOpacity = 0
-                }
-                doneTodo = true
+                todo.isCompleted.toggle()
             } label: {
-                Text("Mark as \(todo.isCompleted ? "incomplete" : "complete")")
+                Text("Mark as \(todo.isCompleted ? "in" : "")complete")
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(todo.isCompleted ? .red : .green)
+                    .foregroundColor(.white)
+                    .padding()
             }
+            Spacer()
         }
     }
 }

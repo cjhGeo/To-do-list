@@ -1,18 +1,16 @@
 //
 //  Todo.swift
-//  CRUD
+//  Todos v3
 //
-//  Created by T Krobot on 25/6/22.
+//  Created by YJ Soon on 9/7/22.
 //
 
 import Foundation
 
-struct Todo: Identifiable {
+struct Todo: Identifiable, Codable {
     
-    let id = UUID()
-    
+    var id = UUID()
     var title: String
-    var details: String = ""
-    var isCompleted: Bool = false
+    var isCompleted = false
+    
 }
-
